@@ -1,0 +1,77 @@
+# ===== PYTHON =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ===== VIRTUAL ENV =====
+venv/
+ENV/
+env/
+.venv/
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# ===== ENV FILES (ВАЖНО!) =====
+.env
+.env.local
+.env.docker
+.env.production
+*.env
+
+# ===== DATABASE =====
+*.db
+*.sqlite3
+postgres_data/
+
+# ===== DOCKER =====
+.docker/
+docker-compose.override.yml
+
+# ===== LOGS =====
+*.log
+logs/
+
+# ===== STATIC & MEDIA (не коммитим загруженные файлы) =====
+static/images/products/*
+!static/images/products/.gitkeep
+media/
+uploads/
+
+# ===== ALEMBIC =====
+alembic/versions/__pycache__/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== TESTS =====
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/

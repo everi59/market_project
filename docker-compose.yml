@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: marketplace_db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-marketplace_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-marketplace_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - marketplace_network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: marketplace_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.docker
+    environment:
+      DB_HOST: db
+    volumes:
+      - ./app:/app/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - marketplace_network
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  marketplace_network:
+    driver: bridge
