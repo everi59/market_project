@@ -35,7 +35,7 @@ class Category(Base):
 
     parent: Mapped[Optional["Category"]] = relationship(
         "Category",
-        remote_side=[id],   # 🔥 ВАЖНО
+        remote_side=[id],
         back_populates="children"
     )
 

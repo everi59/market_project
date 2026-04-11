@@ -63,7 +63,8 @@ async def admin_panel(
 @router.post("/logout")
 async def logout(
     request: Request,
-    user = Depends(get_current_user)
+    user = Depends(get_current_user) # <-- так можно получить user (выкинет ошибку если пользователь не зарегистрирован)
 ):
-    delete_session(request.state.token)
+    delete_session(request.state.token) # <-- так можно получить токен с авторизации (будет None если не зареган)
+    # request.state.user_id <-- так можно получить user_id с авторизации (будет None если не зареган)
     return {"message": "Logout"}
